@@ -1985,12 +1985,12 @@ PrefabInstance:
     - target: {fileID: 114333664465635948, guid: 9623e1c09606a01498f200718f0f607d,
         type: 3}
       propertyPath: playerSpeed
-      value: 1
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 114333664465635948, guid: 9623e1c09606a01498f200718f0f607d,
         type: 3}
       propertyPath: controllerSpeed
-      value: 0.5
+      value: 0.05
       objectReference: {fileID: 0}
     - target: {fileID: 114187299305708370, guid: 9623e1c09606a01498f200718f0f607d,
         type: 3}
@@ -3184,6 +3184,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   axe: {fileID: 2078478634}
+  selectionHelper: {fileID: 0}
+  isDriving: 0
 --- !u!1001 &425895154
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4622,6 +4624,11 @@ PrefabInstance:
         type: 3}
       propertyPath: reverbZoneMixCustomCurve.m_Curve.Array.data[0].value
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7214282870583844333, guid: 41626834d559dd94289615cb4041eda4,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 41626834d559dd94289615cb4041eda4, type: 3}

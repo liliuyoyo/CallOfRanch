@@ -77,15 +77,19 @@ public class chickenController : MonoBehaviour
 
     void executeMovement(int randomNum)
     {
+        if(_trans.rotation.x != 0 || _trans.rotation.z != 0)
+        {
+
+        }
         var ray = new Ray(_trans.position + _trans.up, _trans.forward);
-        //Debug.DrawRay(ray.origin, ray.direction * 2f, Color.yellow);
+        //Debug.DrawRay(ray.origin, ray.direction * 4f, Color.yellow);
         RaycastHit hit;
         switch(randomNum)
         {
             case 1:
                 break;
             case 2:
-                if(Physics.Raycast(ray, out hit, 2f))
+                if(Physics.Raycast(ray, out hit, 4f))
                 {
                     //_trans.transform.eulerAngles += new Vector3(0, 1, 0) * 0.1f;
                     _trans.transform.Rotate(new Vector3(0, 1, 0));
@@ -108,7 +112,7 @@ public class chickenController : MonoBehaviour
                 }
                 break;
             case 3:
-                if (Physics.Raycast(ray, out hit, 2f))
+                if (Physics.Raycast(ray, out hit, 4f))
                 {
                     //_trans.transform.eulerAngles += new Vector3(0, 1, 0) * 0.1f;
                     _trans.transform.Rotate(new Vector3(0, 1, 0));
