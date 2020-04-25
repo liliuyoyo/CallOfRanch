@@ -6,6 +6,8 @@ public class SelectionManager1 : MonoBehaviour
 {
     [SerializeField] private string selectableTag = "Selectable";
     [SerializeField] private string drivibleTag = "isVehicle";
+    [SerializeField] private string ignitableTag = "ignitable";
+    [SerializeField] private string doorTag = "door";
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private Material defaultMaterial;
 
@@ -105,9 +107,9 @@ public class SelectionManager1 : MonoBehaviour
                     Vector3 boost = new Vector3(0.01f, 0.01f, 0.01f);
                     hit.transform.localScale += boost * Input.GetAxis(m_scale);
                 }
-                else if(selection.gameObject.CompareTag(drivibleTag))
+                else if (selection.gameObject.CompareTag(drivibleTag))
                 {
-                    if(Input.GetKeyDown(KeyCode.E))
+                    if (Input.GetKeyDown(KeyCode.E))
                     {
                         isDriving = true;
                         Vector3 newPos = vehicle.transform.position;
@@ -115,6 +117,14 @@ public class SelectionManager1 : MonoBehaviour
                         avatarRig.transform.position = newPos;
                         Camera.main.GetComponent<BoxCollider>().enabled = false;
                     }
+                }
+                else if (selection.gameObject.CompareTag(doorTag))
+                {
+                    // TODO:
+                }
+                else if(selection.gameObject.CompareTag(ignitableTag))
+                {
+                    // TODO:
                 }
             }
             else
