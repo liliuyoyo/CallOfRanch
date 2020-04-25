@@ -44,7 +44,10 @@ public class SelectionManager1 : MonoBehaviour
             if(Input.GetKeyDown(KeyCode.E))
             {
                 isDriving = false;
-                
+                Camera.main.GetComponent<BoxCollider>().enabled = true;
+                avatarRig.transform.position = avatarRig.transform.position - avatarRig.transform.right * 8;
+
+
             }
             else
             {
@@ -67,7 +70,7 @@ public class SelectionManager1 : MonoBehaviour
             var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
             //Debug.Log("ray's direction: " + ray.direction + ". ray's origin: " + ray.origin);
-            //Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
+            Debug.DrawRay(ray.origin, ray.direction * 20, Color.yellow);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 20))
             {
@@ -110,6 +113,7 @@ public class SelectionManager1 : MonoBehaviour
                         Vector3 newPos = vehicle.transform.position;
                         newPos.y += 5.0f;
                         avatarRig.transform.position = newPos;
+                        Camera.main.GetComponent<BoxCollider>().enabled = false;
                     }
                 }
             }

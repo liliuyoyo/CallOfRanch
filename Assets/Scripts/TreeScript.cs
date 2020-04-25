@@ -16,7 +16,8 @@ public class TreeScript : MonoBehaviour
         rb = thisTree.AddComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.useGravity = true;
-        rb.mass = 10;
+        rb.mass = 100;
+        //rb.drag = 5;
     }
 
     private void Update()

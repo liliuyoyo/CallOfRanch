@@ -67,6 +67,7 @@ public class Movement : MonoBehaviour
             m_TurnInputValue = Input.GetAxis(m_TurnAxisName);
 
             EngineAudio();
+            //Camera.main.GetComponent<BoxCollider>().enabled = true;
         }
         //store the player's input and make sure the audio for the engine is playing 
 

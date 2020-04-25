@@ -671,8 +671,9 @@ GameObject:
   - component: {fileID: 1061121162950385541}
   - component: {fileID: 1061121162959907914}
   - component: {fileID: 7214282870583844333}
-  - component: {fileID: 7214282870583844332}
   - component: {fileID: 4678815775759569774}
+  - component: {fileID: 7214282870583844332}
+  - component: {fileID: 7037631750123758854}
   m_Layer: 0
   m_Name: ChickenAnimations
   m_TagString: Untagged
@@ -688,7 +689,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061121162959907917}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.011, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1061121162959417443}
@@ -736,7 +737,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1061121162959907917}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 1000
   m_Drag: 10
   m_AngularDrag: 1000
   m_UseGravity: 1
@@ -744,20 +745,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 84
   m_CollisionDetection: 0
---- !u!64 &7214282870583844332
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1061121162959907917}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 68080758b15737c44b87166a3076a16f, type: 3}
 --- !u!82 &4678815775759569774
 AudioSource:
   m_ObjectHideFlags: 0
@@ -854,6 +841,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!64 &7214282870583844332
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061121162959907917}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Convex: 1
+  m_CookingOptions: 14
+  m_Mesh: {fileID: 4300000, guid: 68080758b15737c44b87166a3076a16f, type: 3}
+--- !u!65 &7037631750123758854
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1061121162959907917}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1278298, y: 0.2572804, z: 0.24605513}
+  m_Center: {x: 0.0032150075, y: 0.12382957, z: -0.031979144}
 --- !u!1 &1061121162959907919
 GameObject:
   m_ObjectHideFlags: 0
