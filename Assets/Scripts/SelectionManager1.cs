@@ -120,7 +120,19 @@ public class SelectionManager1 : MonoBehaviour
                 }
                 else if (selection.gameObject.CompareTag(doorTag))
                 {
-                    // TODO:
+                    Debug.Log("find door!");
+                    if (Input.GetMouseButton(0))
+                    {
+                        Debug.Log("Click!");
+
+                        InteractiveDoor door = selection.GetComponent<InteractiveDoor>();
+                        if (door)
+                        {
+                            Debug.Log("This is a interactive door!");
+
+                            door.TriggerInteraction();
+                        }
+                    }
                 }
                 else if(selection.gameObject.CompareTag(ignitableTag))
                 {

@@ -1905,9 +1905,10 @@ GameObject:
   - component: {fileID: 300991929}
   - component: {fileID: 300991931}
   - component: {fileID: 300991930}
+  - component: {fileID: 300991932}
   m_Layer: 0
   m_Name: Povit (1)
-  m_TagString: Untagged
+  m_TagString: door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1957,6 +1958,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.052185, y: 4.883107, z: 1.4165039}
   m_Center: {x: -3.2332764, y: 5.9805503, z: 0.26791382}
+--- !u!114 &300991932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 300991928}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df889928e259d9849be519ed46528580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &323773290
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5775,6 +5788,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectableTag: Selectable
   drivibleTag: isVehicle
+  ignitableTag: ignitable
+  doorTag: door
   highlightMaterial: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   defaultMaterial: {fileID: 2100000, guid: c0ad165d3edf4ac45af1fac183c54e98, type: 2}
   isDriving: 0
@@ -6636,10 +6651,10 @@ Transform:
   - {fileID: 1058712562}
   - {fileID: 1137657001}
   - {fileID: 1233952690}
+  - {fileID: 1001863093}
   - {fileID: 1421442378}
   - {fileID: 1668333833}
   - {fileID: 1827167906}
-  - {fileID: 1001863093}
   m_Father: {fileID: 245680370}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -7271,9 +7286,10 @@ GameObject:
   - component: {fileID: 1001863093}
   - component: {fileID: 1001863095}
   - component: {fileID: 1001863094}
+  - component: {fileID: 1001863096}
   m_Layer: 0
   m_Name: Povit
-  m_TagString: Untagged
+  m_TagString: door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -7291,7 +7307,7 @@ Transform:
   m_Children:
   - {fileID: 1362192548}
   m_Father: {fileID: 920633202}
-  m_RootOrder: 7
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!111 &1001863094
 Animation:
@@ -7323,6 +7339,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.052185, y: 4.883107, z: 1.4165039}
   m_Center: {x: -3.2332764, y: 5.9805503, z: 0.26791382}
+--- !u!114 &1001863096
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1001863092}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df889928e259d9849be519ed46528580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1004420807
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -22567,9 +22595,10 @@ GameObject:
   - component: {fileID: 1684132650}
   - component: {fileID: 1684132652}
   - component: {fileID: 1684132651}
+  - component: {fileID: 1684132653}
   m_Layer: 0
   m_Name: Povit (2)
-  m_TagString: Untagged
+  m_TagString: door
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -22619,6 +22648,18 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 7.052185, y: 4.883107, z: 1.4165039}
   m_Center: {x: -3.2332764, y: 5.9805503, z: 0.26791382}
+--- !u!114 &1684132653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1684132649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: df889928e259d9849be519ed46528580, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1691870472
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -25669,7 +25710,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078478634}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4484e421530f51e4595cdc9d17f07864, type: 3}
   m_Name: 
@@ -25681,7 +25722,7 @@ Animation:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2078478634}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_Animation: {fileID: 7400000, guid: 68f7fc1c884caed49bb0ae7c49a71f39, type: 2}
   m_Animations:
