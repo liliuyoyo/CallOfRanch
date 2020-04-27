@@ -12,6 +12,7 @@ public class SelectionManager1 : MonoBehaviour
     [SerializeField] private Material defaultMaterial;
 
     public bool isDriving = false;
+    public bool isSelecting = false;
     
 
     private Transform _selection;
@@ -20,12 +21,17 @@ public class SelectionManager1 : MonoBehaviour
     private float yaw = 0.0f;
     public GameObject avatarRig;
     public GameObject vehicle;
+    private GameObject _holdObject;
+    private Vector3 _disVec = new Vector3(1, 1, 1);
     //public GameObject camera;
 
     private string m_transform = "Transform";
+    private string m_raise = "Raise";
     private string m_rotate = "Rotate";
     private string m_scale = "Scale";
     private string m_hold = "Hold";
+
+    
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +48,7 @@ public class SelectionManager1 : MonoBehaviour
         
         if(isDriving)
         {
-            Debug.Log("isDriving is true");
+            //Debug.Log("isDriving is true");
             if(Input.GetKeyDown(KeyCode.E))
             {
                 isDriving = false;
@@ -57,13 +63,58 @@ public class SelectionManager1 : MonoBehaviour
                 newPos.y += 5.0f;
                 avatarRig.transform.position = newPos;
 
-                Debug.Log("avatarRig: " + avatarRig.transform.position + ", vehicle: " + avatarRig.transform.position);
+                
+                //Debug.Log("avatarRig: " + avatarRig.transform.position + ", vehicle: " + avatarRig.transform.position);
+            }
+        }
+        else if(isSelecting)
+        {
+            if(Input.GetAxis(m_hold) < 0)
+            {
+                isSelecting = false;
+                var selectionRenderer = _selection.GetComponent<Renderer>();
+                selectionRenderer.material = defaultMaterial;
+                Vector3 releasePos = avatarRig.transform.position + _disVec;
+                //releasePos.y = 0.0f;
+                _holdObject.transform.position = releasePos;
+                _holdObject = null;
+                _selection = null;
+                
+            }
+            else
+            {
+                _holdObject.transform.position = avatarRig.transform.position + _disVec;
+
+                //Tranform
+                Vector3 force = avatarRig.transform.position - _holdObject.transform.position;
+                force.x = force.x * 0.003f;
+                force.y = 0;
+                force.z = force.z * 0.003f;
+                Debug.Log(force);
+                _holdObject.transform.position -= force * Input.GetAxis(m_transform);
+
+                //Raise
+                force = new Vector3(0, -1, 0);
+                _holdObject.transform.position -= force * Input.GetAxis(m_raise);
+
+                //Rotate
+                yaw += rotateSpeed * Input.GetAxis(m_rotate);
+                _holdObject.transform.eulerAngles = new Vector3(0, yaw, 0);
+                Debug.Log(_holdObject.transform.eulerAngles);
+
+                //Scale 
+                Vector3 boost = new Vector3(0.01f, 0.01f, 0.01f);
+                _holdObject.transform.localScale += boost * Input.GetAxis(m_scale);
+
+                _disVec = _holdObject.transform.position - avatarRig.transform.position;
             }
         }
         else
         {
             if (_selection != null)
             {
+                
+                //Debug.Log("Lose selction");
                 var selectionRenderer = _selection.GetComponent<Renderer>();
                 selectionRenderer.material = defaultMaterial;
                 _selection = null;
@@ -72,7 +123,7 @@ public class SelectionManager1 : MonoBehaviour
             var ray = new Ray(Camera.main.transform.position, Camera.main.transform.forward);
 
             //Debug.Log("ray's direction: " + ray.direction + ". ray's origin: " + ray.origin);
-            Debug.DrawRay(ray.origin, ray.direction * 20, Color.yellow);
+            //Debug.DrawRay(ray.origin, ray.direction * 20, Color.yellow);
             RaycastHit hit;
             if (Physics.Raycast(ray, out hit, 20))
             {
@@ -89,23 +140,14 @@ public class SelectionManager1 : MonoBehaviour
                         selectionRenderer.material = highlightMaterial;
                     }
                     _selection = selection;
-
-                    //Tranform
-                    Vector3 force = Camera.main.transform.position - hit.transform.position;
-                    force.x = force.x * 0.003f;
-                    force.y = 0;
-                    force.z = force.z * 0.003f;
-                    Debug.Log(force);
-                    hit.transform.position -= force * Input.GetAxis(m_transform);
-
-                    //Rotate
-                    yaw += rotateSpeed * Input.GetAxis(m_rotate);
-                    hit.transform.eulerAngles = new Vector3(0, yaw, 0);
-                    Debug.Log(hit.transform.eulerAngles);
-
-                    //Scale 
-                    Vector3 boost = new Vector3(0.01f, 0.01f, 0.01f);
-                    hit.transform.localScale += boost * Input.GetAxis(m_scale);
+                    if (Input.GetAxis(m_hold) > 0)
+                    {
+                        Debug.Log("Select successfully");
+                        _holdObject = _selection.gameObject;
+                        _disVec = _holdObject.transform.position - avatarRig.transform.position;
+                        isSelecting = true;
+                    }
+                    
                 }
                 else if (selection.gameObject.CompareTag(drivibleTag))
                 {

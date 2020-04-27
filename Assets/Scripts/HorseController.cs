@@ -6,6 +6,8 @@ public class HorseController : MonoBehaviour
 {
     public Animator anim;
     public GameObject self;
+    public GameObject feeder;
+    public GameObject testCube;
     private Transform _trans;
 
     //idling-1, walking-2, running-3
@@ -18,16 +20,26 @@ public class HorseController : MonoBehaviour
     private bool _hasFood;
     private float _foodDistance;
 
+    private bool _step1_rotation = false;
+    private bool _step1_position = false;
+    private bool _step2_rotation = false;
+    private bool _step2_position = false;
     //private float[] _slotsPosX = { -4.900635f, -5.150635f };
     //private float[] _slotsPosY = { -8.715881f, -31.67587f };
-    private Vector3[] _slotsPos = { new Vector3(-1.75f, 0f, -8.64f), new Vector3(-1.83f, 0, -32.08f) };
-    private int _objNumber = 0;
+    //private Vector3[] _slotsPos = { new Vector3(-1.75f, 0f, -8.64f), new Vector3(-1.83f, 0, -32.08f) };
+    private Vector3 _slotPos;
+    //private int _objNumber = 0;
 
     // Start is called before the first frame update
     void Start()
     {
-        self = GetComponent<GameObject>();
+        self = this.gameObject;
         anim = GetComponent<Animator>();
+        //feeder = GetComponent<GameObject>();
+        feeder = GameObject.Find("Feeder_2");
+        //testCube = GetComponent<GameObject>();
+        testCube = GameObject.Find("Cube");
+        _slotPos = feeder.transform.position;
         _trans = this.transform;
 
         _randomNum = 0;
@@ -40,25 +52,88 @@ public class HorseController : MonoBehaviour
         _randomTime = Random.Range(3, 8);
         _randomNum = Random.Range(0, 4);
         _randomType = Random.Range(1, 100);
-
-        _objNumber = int.Parse(self.name.Split('-')[1]);
-        _foodDistance = Vector3.Distance(_slotsPos[_objNumber], self.transform.position);
+        //Debug.Log(self.name);
+        //_objNumber = int.Parse(self.name.Split('-')[1]);
+        _foodDistance = Vector3.Distance(_slotPos, self.transform.position);
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Debug.Log("deltaTime: " + deltaTime + ", randomTime: " + randomTime + ", randomNum: " + randomNum + ", randomType: " + randomType);
+        //self = this.gameObject;
+        //Debug.Log("deltaTime: " + _deltaTime + ", randomTime: " + _randomTime + ", randomNum: " + _randomNum + ", randomType: " + _randomType);
 
-        if(_hasFood)
+        if (_hasFood)
         {
+            //Debug.Log("Horse: has food is true");
             //execute seeking food method.
-            _foodDistance = Vector3.Distance(_slotsPos[_objNumber], self.transform.position);
+            //_foodDistance = Vector3.Distance(_slotPos, self.transform.position);
             anim.SetFloat("foodDistance", _foodDistance);
+            Vector3 destination1 = new Vector3(_slotPos.x, self.transform.position.y, self.transform.position.z);
+            Vector3 direction1 = destination1 - self.transform.position;
+            Vector3 destination2 = feeder.transform.position;
+            Vector3 direction2 = destination2 - self.transform.position;
+            //Vector3 destination1 = new Vector3(self.transform.position.x, self.transform.position.y, _slotPos.z);
+            if (!_step1_rotation)
+            {
 
-            Vector3 destination1 = new Vector3(self.transform.position.x, self.transform.position.y, _slotsPos[_objNumber].z);
+                float angle = Vector3.Angle(direction1, self.transform.forward);
+                //Debug.Log(angle);
+                if (angle > 3)
+                {
+                    self.transform.Rotate(new Vector3(0, 1, 0));
+                }
+                else
+                {
+                    _step1_rotation = true;
+                }
+            }
+            else if(!_step1_position)
+            {
+                float distance = Vector3.Distance(destination1, self.transform.position);
+                //Debug.Log(distance);
+                if(distance > 1)
+                {
+                    self.transform.position += self.transform.forward * 0.15f;
+                }
+                else
+                {
+                    _step1_position = true;
+                }
+            }
+            else if(!_step2_rotation)
+            {
+                float angle = Vector3.Angle(direction2, self.transform.forward);
+                //Debug.Log(angle);
+                if (angle > 2)
+                {
+                    self.transform.Rotate(new Vector3(0, 1, 0));
+                }
+                else
+                {
+                    _step2_rotation = true;
+                }
+            }
+            else if(!_step2_position)
+            {
+                float distance = self.transform.position.z - destination2.z;
+                _foodDistance = distance;
+                Debug.Log(distance);
+                if (distance > 5)
+                {
+                    self.transform.position += self.transform.forward * 0.15f;
+                }
+                else
+                {
+                    _step2_position = true;
+                    anim.SetBool("seekFood", false);
+                    anim.SetFloat("foodDistance", distance);
+                }
+            }
+            
+            //ture and move
 
-        }
+        } 
         else
         {
             if (_deltaTime < _randomTime)
@@ -103,12 +178,9 @@ public class HorseController : MonoBehaviour
 
     void executeMovement(int randomNum)
     {
-        if(_trans.rotation.x != 0 || _trans.rotation.z != 0)
-        {
 
-        }
-        var ray = new Ray(_trans.position + _trans.up, _trans.forward);
-        //Debug.DrawRay(ray.origin, ray.direction * 4f, Color.yellow);
+        var ray = new Ray(_trans.position + _trans.up * 5f, _trans.forward);
+        Debug.DrawRay(ray.origin, ray.direction * 4f, Color.yellow);
         RaycastHit hit;
         switch(randomNum)
         {
@@ -132,7 +204,7 @@ public class HorseController : MonoBehaviour
                     }
                     else
                     {
-                        _trans.position += _trans.forward * 0.006f;
+                        _trans.position += _trans.forward * 0.06f;
                     }
 
                 }
@@ -155,7 +227,7 @@ public class HorseController : MonoBehaviour
                     }
                     else
                     {
-                        _trans.position += _trans.forward * 0.015f;
+                        _trans.position += _trans.forward * 0.15f;
                     }
 
                 }
@@ -168,5 +240,16 @@ public class HorseController : MonoBehaviour
     public void UpdateFoodState(bool hasFood)
     {
         _hasFood = hasFood;
+        if (_randomNum == 0)
+        {
+            breath(3);
+
+        }
+        anim.SetBool("hasFood", hasFood);
+        anim.SetBool("seekFood", hasFood);
+        
+        Vector3 destination1 = new Vector3(_slotPos.x, self.transform.position.y, self.transform.position.z) + new Vector3(0, 4.6f, 0);
+        testCube.transform.position = destination1;
     }
+
 }
