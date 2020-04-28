@@ -14,7 +14,7 @@ public class Feeder : MonoBehaviour
     private MeshRenderer _fullFeederRender;
     private MeshRenderer _emptyFeederRender;
 
-    
+    private string hayTag = "hay";
 
     void Start()
     {
@@ -53,7 +53,12 @@ public class Feeder : MonoBehaviour
         horseController1.UpdateFoodState(true);
 
         Debug.Log(collision.gameObject.name);
-        collision.gameObject.SetActive(false);
+        if(collision.gameObject.CompareTag(hayTag))
+        {
+            collision.gameObject.SetActive(false);
+            //Destroy(collision.gameObject);
+        }
+        
 
         //HorseController horseController2 = horse2.GetComponent<HorseController>();
         //horseController1.SetFeederPos();

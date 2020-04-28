@@ -8,6 +8,7 @@ public class SelectionManager1 : MonoBehaviour
     [SerializeField] private string drivibleTag = "isVehicle";
     [SerializeField] private string ignitableTag = "ignitable";
     [SerializeField] private string doorTag = "door";
+    [SerializeField] private string hayTag = "hay";
     [SerializeField] private Material highlightMaterial;
     [SerializeField] private Material defaultMaterial;
 
@@ -131,7 +132,7 @@ public class SelectionManager1 : MonoBehaviour
 
                 //Debug.Log("Object caught");
 
-                if (selection.gameObject.CompareTag(selectableTag))
+                if (selection.gameObject.CompareTag(selectableTag) || selection.gameObject.CompareTag(hayTag))
                 {
                     //Debug.Log("Object is selectable");
                     var selectionRenderer = selection.GetComponent<Renderer>();

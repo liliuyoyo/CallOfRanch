@@ -50,7 +50,7 @@ public class HorseController : MonoBehaviour
         breath(_randomNum);
 
         _randomTime = Random.Range(3, 8);
-        _randomNum = Random.Range(0, 4);
+        _randomNum = Random.Range(0, 3);
         _randomType = Random.Range(1, 100);
         //Debug.Log(self.name);
         //_objNumber = int.Parse(self.name.Split('-')[1]);
@@ -118,8 +118,8 @@ public class HorseController : MonoBehaviour
             {
                 float distance = self.transform.position.z - destination2.z;
                 _foodDistance = distance;
-                Debug.Log(distance);
-                if (distance > 5)
+                //Debug.Log(distance);
+                if (distance > 4.5)
                 {
                     self.transform.position += self.transform.forward * 0.15f;
                 }
@@ -127,10 +127,17 @@ public class HorseController : MonoBehaviour
                 {
                     _step2_position = true;
                     anim.SetBool("seekFood", false);
+                    anim.SetBool("isIdling", false);
+                    anim.SetBool("isWalking", false);
                     anim.SetFloat("foodDistance", distance);
+
                 }
             }
-            
+            else
+            {
+                float distance = self.transform.position.z - destination2.z;
+                anim.SetFloat("foodDistance", distance);
+            }
             //ture and move
 
         } 
@@ -156,6 +163,10 @@ public class HorseController : MonoBehaviour
 
     void breath(int randomNum)
     {
+        if(_hasFood)
+        {
+            Debug.Log("breath after _hasFood is true");
+        }
         anim.SetBool("isIdling", false);
         anim.SetBool("isWalking", false);
         anim.SetBool("isRunning", false);
@@ -239,14 +250,14 @@ public class HorseController : MonoBehaviour
 
     public void UpdateFoodState(bool hasFood)
     {
-        _hasFood = hasFood;
+        _hasFood = true;
         if (_randomNum == 0)
         {
             breath(3);
 
         }
-        anim.SetBool("hasFood", hasFood);
-        anim.SetBool("seekFood", hasFood);
+        anim.SetBool("hasFood", true);
+        anim.SetBool("seekFood", true);
         
         Vector3 destination1 = new Vector3(_slotPos.x, self.transform.position.y, self.transform.position.z) + new Vector3(0, 4.6f, 0);
         testCube.transform.position = destination1;

@@ -3577,7 +3577,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5f0e9dc916919d8449d34a4f823addea, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5f0e9dc916919d8449d34a4f823addea, type: 3}
       propertyPath: m_LocalScale.z
@@ -5320,8 +5320,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 1, y: 5.142683, z: 1}
+  m_Center: {x: 0, y: -2.0713415, z: 0}
 --- !u!1001 &733081571
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7036,7 +7036,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: cd801ce36128fbc46a1153ad39e9a157, type: 3}
       propertyPath: m_TagString
-      value: Selectable
+      value: hay
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: cd801ce36128fbc46a1153ad39e9a157, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9953,7 +9953,7 @@ PrefabInstance:
     - target: {fileID: 2734009794314612429, guid: a1a101a9b6e732c4fbb7e982b09039a4,
         type: 3}
       propertyPath: m_Size.z
-      value: 0.6478064
+      value: 0.52481663
       objectReference: {fileID: 0}
     - target: {fileID: 2734009794314612429, guid: a1a101a9b6e732c4fbb7e982b09039a4,
         type: 3}
@@ -9963,12 +9963,12 @@ PrefabInstance:
     - target: {fileID: 2734009794314612429, guid: a1a101a9b6e732c4fbb7e982b09039a4,
         type: 3}
       propertyPath: m_Center.z
-      value: -0.067075275
+      value: -0.12857065
       objectReference: {fileID: 0}
     - target: {fileID: 2734009794314612429, guid: a1a101a9b6e732c4fbb7e982b09039a4,
         type: 3}
       propertyPath: m_Center.x
-      value: 0.0068031764
+      value: 0.0068031875
       objectReference: {fileID: 0}
     - target: {fileID: 2734009794314612427, guid: a1a101a9b6e732c4fbb7e982b09039a4,
         type: 3}
@@ -9980,6 +9980,11 @@ PrefabInstance:
       propertyPath: feeder
       value: 
       objectReference: {fileID: 122757281}
+    - target: {fileID: 2734009794314612430, guid: a1a101a9b6e732c4fbb7e982b09039a4,
+        type: 3}
+      propertyPath: m_AngularDrag
+      value: 20
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a1a101a9b6e732c4fbb7e982b09039a4, type: 3}
 --- !u!1001 &1256785788
@@ -25366,7 +25371,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a37e722c4e6f1984a90a19db97760237, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: a37e722c4e6f1984a90a19db97760237, type: 3}
       propertyPath: m_LocalScale.z
