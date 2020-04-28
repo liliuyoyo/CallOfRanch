@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class activateTorch : MonoBehaviour
 {
-//Variables
     public GameObject torch;
 
     public GameObject selectionHelper;
@@ -22,14 +21,14 @@ public class activateTorch : MonoBehaviour
     private void Update()
     {
         isDriving = sm.isDriving;
-        if(isDriving)
+        if (isDriving)
         {
             isEquiped = false;
             torch.SetActive(false);
         }
         else
         {
-            if (!axe.activeSelf && Input.GetKeyDown(KeyCode.Alpha9))
+            if (!torch.activeSelf && Input.GetKeyDown(KeyCode.Alpha9))
             {
                 isEquiped = true;
                 torch.SetActive(true);
@@ -39,12 +38,13 @@ public class activateTorch : MonoBehaviour
                 isEquiped = false;
                 torch.SetActive(false);
             }
+        }
 
     }
 
     public void SetEquipment(bool enable)
     {
-        if(enable)
+        if (enable)
         {
             isEquiped = true;
             torch.SetActive(true);
