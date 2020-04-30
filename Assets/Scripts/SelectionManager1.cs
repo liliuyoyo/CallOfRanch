@@ -22,8 +22,11 @@ public class SelectionManager1 : MonoBehaviour
     private float yaw = 0.0f;
     public GameObject avatarRig;
     public GameObject vehicle;
+    public GameObject leftController;
+    public GameObject rightController;
     private GameObject _holdObject;
-    private Vector3 _disVec = new Vector3(1, 1, 1);
+    //private Vector3 _disVec = new Vector3(1, 1, 1);
+    private float _dis = 0.0f;
     //public GameObject camera;
 
     private string m_transform = "Transform";
@@ -70,44 +73,76 @@ public class SelectionManager1 : MonoBehaviour
         }
         else if(isSelecting)
         {
-            if(Input.GetAxis(m_hold) < 0)
+            if(!_holdObject.activeSelf || Input.GetAxis(m_hold) < 0)
             {
+                ResetRightController();
                 isSelecting = false;
                 var selectionRenderer = _selection.GetComponent<Renderer>();
                 selectionRenderer.material = defaultMaterial;
-                Vector3 releasePos = avatarRig.transform.position + _disVec;
-                //releasePos.y = 0.0f;
-                _holdObject.transform.position = releasePos;
+                //Vector3 releasePos = avatarRig.transform.position + _disVec;
+                ////releasePos.y = 0.0f;
+                //_holdObject.transform.position = releasePos;
                 _holdObject = null;
                 _selection = null;
                 
             }
             else
             {
-                _holdObject.transform.position = avatarRig.transform.position + _disVec;
 
-                //Tranform
-                Vector3 force = avatarRig.transform.position - _holdObject.transform.position;
-                force.x = force.x * 0.003f;
-                force.y = 0;
-                force.z = force.z * 0.003f;
-                Debug.Log(force);
-                _holdObject.transform.position -= force * Input.GetAxis(m_transform);
+                //_holdObject.transform.position = avatarRig.transform.position + _disVec;
 
-                //Raise
-                force = new Vector3(0, -1, 0);
-                _holdObject.transform.position -= force * Input.GetAxis(m_raise);
+                ////Tranform
+                //Vector3 force = avatarRig.transform.position - _holdObject.transform.position;
+                //force.x = force.x * 0.003f;
+                //force.y = 0;
+                //force.z = force.z * 0.003f;
+                //Debug.Log(force);
+                //_holdObject.transform.position -= force * Input.GetAxis(m_transform);
 
-                //Rotate
-                yaw += rotateSpeed * Input.GetAxis(m_rotate);
-                _holdObject.transform.eulerAngles = new Vector3(0, yaw, 0);
-                Debug.Log(_holdObject.transform.eulerAngles);
+                ////Raise
+                //force = new Vector3(0, -1, 0);
+                //_holdObject.transform.position -= force * Input.GetAxis(m_raise);
 
-                //Scale 
-                Vector3 boost = new Vector3(0.01f, 0.01f, 0.01f);
-                _holdObject.transform.localScale += boost * Input.GetAxis(m_scale);
+                ////Rotate
+                //yaw += rotateSpeed * Input.GetAxis(m_rotate);
+                //_holdObject.transform.eulerAngles = new Vector3(0, yaw, 0);
+                //Debug.Log(_holdObject.transform.eulerAngles);
 
-                _disVec = _holdObject.transform.position - avatarRig.transform.position;
+                ////Scale 
+                //Vector3 boost = new Vector3(0.01f, 0.01f, 0.01f);
+                //_holdObject.transform.localScale += boost * Input.GetAxis(m_scale);
+
+                //_disVec = _holdObject.transform.position - avatarRig.transform.position;
+                
+                
+                float leftAngleY = leftController.transform.rotation.eulerAngles.y - avatarRig.transform.rotation.eulerAngles.y;
+                if (leftAngleY > 180) leftAngleY -= 360;
+                if (leftAngleY < -180) leftAngleY += 360;
+                leftAngleY = leftAngleY < 60f ? leftAngleY : 60f;
+                leftAngleY = leftAngleY > -60f ? leftAngleY : -60f;
+                _dis += leftAngleY * 0.01f;
+                Vector3 vz = avatarRig.transform.forward * _dis;
+
+
+                float rightAngleY = rightController.transform.rotation.eulerAngles.y - avatarRig.transform.rotation.eulerAngles.y;
+                if (rightAngleY > 180) rightAngleY -= 360;
+                if (rightAngleY < -180) rightAngleY += 360;
+                rightAngleY = rightAngleY < 60f ? rightAngleY : 60f;
+                rightAngleY = rightAngleY > -60f ? rightAngleY : -60f;
+                Vector3 vx = avatarRig.transform.right * (_dis * Mathf.Tan(rightAngleY * Mathf.PI / 180));
+
+                float rightAngleX = rightController.transform.rotation.eulerAngles.x - avatarRig.transform.rotation.eulerAngles.x;
+                if (rightAngleX > 180) rightAngleX -= 360;
+                if (rightAngleX < -180) rightAngleX += 360;
+                rightAngleX = rightAngleX < 60f ? rightAngleX : 60f;
+                rightAngleX = rightAngleX > -60f ? rightAngleX : -60f;
+                Vector3 vy = avatarRig.transform.up * (_dis * Mathf.Tan(rightAngleX * Mathf.PI / 180)) * -1f;
+                //Debug.Log("Position of RightController: " + rightController.transform.position + ", Rotation of RightController: " + rightController.transform.rotation);
+                //Debug.Log(rightController.transform.rotation.x + " " + rightController.transform.rotation.y + " " + rightController.transform.rotation.z + " " + rightController.transform.rotation.w);
+                //Debug.Log(rightController.transform.rotation.eulerAngles - avatarRig.transform.rotation.eulerAngles);
+                //Debug.Log(angleX + " " + angleY + " " + Mathf.Tan(angleX * Mathf.PI / 180) + " " + Mathf.Tan(angleY * Mathf.PI / 180));
+                //Debug.Log("vx: " + vx + ", vy: " + vy);
+                _holdObject.transform.position = vz + vy + vx + rightController.transform.position;
             }
         }
         else
@@ -143,9 +178,11 @@ public class SelectionManager1 : MonoBehaviour
                     _selection = selection;
                     if (Input.GetAxis(m_hold) > 0)
                     {
+                        ResetRightController();
                         Debug.Log("Select successfully");
                         _holdObject = _selection.gameObject;
-                        _disVec = _holdObject.transform.position - avatarRig.transform.position;
+                        //_disVec = _holdObject.transform.position - avatarRig.transform.position;
+                        _dis = Vector3.Distance(_holdObject.transform.position, avatarRig.transform.position);
                         isSelecting = true;
                     }
                     
@@ -187,5 +224,12 @@ public class SelectionManager1 : MonoBehaviour
                 //Debug.Log("Object not caught");
             }
         }
+    }
+
+    private void ResetRightController()
+    {
+        rightController.transform.position = leftController.transform.position + leftController.transform.right * 0.4f;
+        rightController.transform.rotation = new Quaternion();
+        leftController.transform.rotation = new Quaternion();
     }
 }

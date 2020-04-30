@@ -190,7 +190,7 @@ public class HorseController : MonoBehaviour
     void executeMovement(int randomNum)
     {
 
-        var ray = new Ray(_trans.position + _trans.up * 5f, _trans.forward);
+        var ray = new Ray(_trans.position + _trans.up, _trans.forward);
         Debug.DrawRay(ray.origin, ray.direction * 4f, Color.yellow);
         RaycastHit hit;
         switch(randomNum)
@@ -198,7 +198,7 @@ public class HorseController : MonoBehaviour
             case 1:
                 break;
             case 2:
-                if(Physics.Raycast(ray, out hit, 4f))
+                if(Physics.Raycast(ray, out hit, 4.5f))
                 {
                     //_trans.transform.eulerAngles += new Vector3(0, 1, 0) * 0.1f;
                     _trans.transform.Rotate(new Vector3(0, 1, 0));
@@ -221,7 +221,7 @@ public class HorseController : MonoBehaviour
                 }
                 break;
             case 3:
-                if (Physics.Raycast(ray, out hit, 4f))
+                if (Physics.Raycast(ray, out hit, 4.5f))
                 {
                     //_trans.transform.eulerAngles += new Vector3(0, 1, 0) * 0.1f;
                     _trans.transform.Rotate(new Vector3(0, 1, 0));
@@ -260,7 +260,7 @@ public class HorseController : MonoBehaviour
         anim.SetBool("seekFood", true);
         
         Vector3 destination1 = new Vector3(_slotPos.x, self.transform.position.y, self.transform.position.z) + new Vector3(0, 4.6f, 0);
-        testCube.transform.position = destination1;
+        //testCube.transform.position = destination1;
     }
 
 }

@@ -11,9 +11,13 @@ public class Movement : MonoBehaviour
     public AudioClip m_EngineIdling;
     public AudioClip m_EngineDriving;
     public float m_PitchRange = 0.2f;
-    
 
+    public GameObject rightController;
+    public GameObject leftController;
+    public GameObject avatarRig;
     public GameObject selectionHelper;
+    public float c_speed = 1.0f;
+    public float c_turnSpeed = 1.0f;
     SelectionManager1 sm;
     public bool isDriving = false;
 
@@ -23,7 +27,9 @@ public class Movement : MonoBehaviour
     private float m_MovementInputValue;
     private float m_TurnInputValue;
     private float m_OriginalPitch;
-    
+
+    private float leftAngleY;
+    private float rightAngleX;
 
     private void Awake()
     {
@@ -70,12 +76,12 @@ public class Movement : MonoBehaviour
             //Camera.main.GetComponent<BoxCollider>().enabled = true;
         }
         //store the player's input and make sure the audio for the engine is playing 
-
     }
 
     private void EngineAudio()
     {
-        if (Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f)
+        if(Mathf.Abs(rightAngleX) < 1f && Mathf.Abs(leftAngleY) < 1f)
+        //if (Mathf.Abs(m_MovementInputValue) < 0.1f && Mathf.Abs(m_TurnInputValue) < 0.1f)
         {
             if (m_MovementAudio.clip == m_EngineDriving)
             {
@@ -97,21 +103,49 @@ public class Movement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Move();
-        Turn();
+        if(isDriving)
+        {
+            Turn();
+            Move();
+        }
     }
 
     private void Move()
     {
-        Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
-        m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        leftAngleY = leftController.transform.rotation.eulerAngles.x - avatarRig.transform.rotation.eulerAngles.x;
+        if (leftAngleY > 180) leftAngleY -= 360;
+        if (leftAngleY < -180) leftAngleY += 360;
+        leftAngleY = leftAngleY < 60f ? leftAngleY : 60f;
+        leftAngleY = leftAngleY > -60f ? leftAngleY : -60f;
+        Vector3 movement = transform.forward * leftAngleY * c_speed;
+
+
+
+        //m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
+        m_Rigidbody.AddForce(movement);
+        //Vector3 movement = transform.forward * m_MovementInputValue * m_Speed * Time.deltaTime;
+        //m_Rigidbody.MovePosition(m_Rigidbody.position + movement);
 
     }
 
     private void Turn()
     {
-        float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
-        Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
-        m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+        rightAngleX = rightController.transform.rotation.eulerAngles.y - avatarRig.transform.rotation.eulerAngles.y;
+        if (rightAngleX > 180) rightAngleX -= 360;
+        if (rightAngleX < -180) rightAngleX += 360;
+        rightAngleX = rightAngleX < 60f ? rightAngleX : 60f;
+        rightAngleX = rightAngleX > -60f ? rightAngleX : -60f;
+        Vector3 movementY = transform.right * rightAngleX * c_turnSpeed;
+        //float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
+        //float turn = rightAngleX * 0.1f;
+        //Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+        //m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
+        //m_Rigidbody.AddForce(movementY);
+        m_Rigidbody.AddForceAtPosition(movementY, m_Rigidbody.position + m_Rigidbody.transform.forward);
+        m_Rigidbody.AddForceAtPosition(movementY * -1, m_Rigidbody.position - m_Rigidbody.transform.forward);
+        //m_Rigidbody.AddRelativeTorque(movementY);
+        //float turn = m_TurnInputValue * m_TurnSpeed * Time.deltaTime;
+        //Quaternion turnRotation = Quaternion.Euler(0f, turn, 0f);
+        //m_Rigidbody.MoveRotation(m_Rigidbody.rotation * turnRotation);
     }
 }

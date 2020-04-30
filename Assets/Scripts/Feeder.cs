@@ -45,18 +45,19 @@ public class Feeder : MonoBehaviour
         //    Debug.Log("fullFeederRender is null");
         //}
         Debug.Log(fullFeeder.gameObject.name);
-        _fullFeederRender.enabled = true;
-        //_emptyFeederRender.enabled = false;
-        fullFeeder.SetActive(true);
 
-        HorseController horseController1 = horse1.GetComponent<HorseController>();
-        horseController1.UpdateFoodState(true);
 
         Debug.Log(collision.gameObject.name);
         if(collision.gameObject.CompareTag(hayTag))
         {
             collision.gameObject.SetActive(false);
             //Destroy(collision.gameObject);
+            _fullFeederRender.enabled = true;
+            //_emptyFeederRender.enabled = false;
+            //fullFeeder.SetActive(true);
+
+            HorseController horseController1 = horse1.GetComponent<HorseController>();
+            horseController1.UpdateFoodState(true);
         }
         
 

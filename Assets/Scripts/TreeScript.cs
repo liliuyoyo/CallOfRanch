@@ -41,4 +41,12 @@ public class TreeScript : MonoBehaviour
         Instantiate(logs, thisTree.transform.position + new Vector3(5, 5, 0) + position, Quaternion.Euler(270f, 70f, 0f));
 
     }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.name.Equals("Viking_Axe"))
+        {
+            treeHealth--;
+        }
+    }
 }
